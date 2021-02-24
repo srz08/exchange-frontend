@@ -1,7 +1,6 @@
 window.onload = function() { 
+    var SERVER_URL = "http://127.0.0.1:5000"
     var addButton = document.getElementById("add-button");
-
-
     addButton.addEventListener("click", addItem);
     var sellUsdTransactions = [];
     var buyUsdTransactions = [];
@@ -37,4 +36,19 @@ window.onload = function() {
         document.getElementById("buy-usd-rate").innerHTML = avg2 + " USD per LBP";
         }        
     }
+
+    function fetchRates() {
+        fetch(`${SERVER_URL}/exchangeRate`)
+        .then(response => response.json())
+        .then(data => {
+            var usd_to_lbp = data['usd_to_lbp']
+            var lbp_to_usd = data['lbp_to_usd']
+            document.getElementById("sell-usd-rate").innerHTML = usd_to_lbp + "USD per LBP"
+            document.getElementById("buy-usd-rate").innerHTML = usd_to_lbp + "LBP per USD"
+       });
+      }
+      fetchRates();
 }
+
+
+  
